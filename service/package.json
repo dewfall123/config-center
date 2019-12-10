@@ -8,6 +8,8 @@
     "midway": "^1.0.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^8.2.0",
+    "@commitlint/config-angular": "^8.2.0",
     "@types/mocha": "^5.2.7",
     "@types/node": "^10.5.5",
     "commitlint": "^8.2.0",
@@ -43,7 +45,7 @@
   },
   "husky": {
     "hooks": {
-      "commitlint": "commitlint -E $GIT_PARAMS"
+      "commitlint": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
   "midway-bin-clean": [
