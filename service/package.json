@@ -45,7 +45,7 @@
   },
   "husky": {
     "hooks": {
-      "commitlint": "commitlint -E HUSKY_GIT_PARAMS"
+      "commitlint": "echo test"
     }
   },
   "midway-bin-clean": [
