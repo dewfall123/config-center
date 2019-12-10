@@ -43,7 +43,7 @@
   },
   "husky": {
     "hooks": {
-      "commitlint": "commitlint -E HUSKY_GIT_PARAMS"
+      "commitlint": "commitlint -E $GIT_PARAMS"
     }
   },
   "midway-bin-clean": [
