@@ -45,7 +45,7 @@
   },
   "husky": {
     "hooks": {
-      "commitlint": "echo test"
+      "commit-msg": "echo test"
     }
   },
   "midway-bin-clean": [
