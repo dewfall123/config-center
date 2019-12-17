@@ -1,23 +1,11 @@
-/**
- * @description User-Service parameters
- */
-export interface IUserOptions {
-  id: number;
-}
+import { GraphQLSchema } from 'graphql';
+import { SchemaDefinition } from 'mongoose';
 
 /**
- * @description User-Service response
+ * @description model-Service parameters
  */
-export interface IUserResult {
-  id: number;
-  username: string;
-  phone: string;
-  email?: string;
-}
-
-/**
- * @description User-Service abstractions
- */
-export interface IUserService {
-  getUser(options: IUserOptions): Promise<IUserResult>;
+export interface IGraphql {
+  schemas: { [ propsName: string ]: GraphQLSchema };
+  getGraphQLSchema(name: string): GraphQLSchema;
+  buildSchema(name: string, schema: SchemaDefinition): GraphQLSchema;
 }
