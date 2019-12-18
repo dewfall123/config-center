@@ -1,11 +1,20 @@
 import { GraphQLSchema } from 'graphql';
-import { SchemaDefinition } from 'mongoose';
+import { SchemaDefinition, Connection } from 'mongoose';
 
 /**
  * @description model-Service parameters
  */
-export interface IGraphql {
-  schemas: { [ propsName: string ]: GraphQLSchema };
-  getGraphQLSchema(name: string): GraphQLSchema;
-  buildSchema(name: string, schema: SchemaDefinition): GraphQLSchema;
+export interface IGraphqlSchemas {
+  schemas: { [propsName: string]: GraphQLSchema };
+  getGraphQLSchema(name: string): GraphQLSchema | undefined;
+  buildSchema(
+    url: string,
+    name: string,
+    schema: SchemaDefinition,
+  ): Promise<GraphQLSchema>;
+}
+
+export interface IConnections {
+  pool: { [propName: string]: Connection };
+  getConn(url: string): Promise<Connection>;
 }

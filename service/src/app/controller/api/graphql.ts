@@ -10,26 +10,22 @@ import {
 
 import { graphql } from 'graphql';
 
-import { IGraphql } from '../../../interface';
+import { IGraphqlSchemas } from '../../../interface';
 
 @provide()
 @controller('/api/graphql')
 export class GraphQLController {
-  @inject()
-  ctx: Context;
 
   @config('dbConfig')
   config: EggAppConfig;
 
-  @inject('GraphQLService')
-  GraphQLService: IGraphql;
+  @inject('graphqlSchemas')
+  GraphQLService: IGraphqlSchemas;
 
-  @get('/')
-  async index() {
-    const schemaDef = this.config.schema;
-    const graphqlSchema = this.GraphQLService.buildSchema('config', schemaDef);
-
-    const query = this.ctx.query;
+  @get('/:project/:collection')
+  async index(ctx: Context) {
+    const { project, collection } = ctx.params;
+    
     const result = await graphql(graphqlSchema, query);
     this.ctx.body = result;
   }

@@ -1,28 +1,36 @@
-import { provide, ScopeEnum, scope } from 'midway';
-import { Schema, model, SchemaDefinition } from 'mongoose';
+import { provide, ScopeEnum, scope, inject } from 'midway';
+import { Schema, SchemaDefinition } from 'mongoose';
 import { composeWithMongoose } from 'graphql-compose-mongoose';
 import { schemaComposer } from 'graphql-compose';
 import { GraphQLSchema } from 'graphql';
 
-import { IGraphql } from '../../interface';
+import { IGraphqlSchemas, IConnections } from '../../interface';
 
 @scope(ScopeEnum.Singleton)
-@provide('GraphQLService')
-export class GraphQL implements IGraphql {
+@provide('graphqlSchemas')
+export class GraphqlSchemas implements IGraphqlSchemas {
 
   schemas: { [ propsName: string ]: GraphQLSchema };
+
+  @inject('connections')
+  connections: IConnections;
 
   constructor() {
     this.schemas = {};
   }
 
-  getGraphQLSchema(name: string): GraphQLSchema {
+  getGraphQLSchema(name: string): GraphQLSchema | undefined {
     return this.schemas[name];
   }
 
-  buildSchema(name: string, schema: SchemaDefinition): GraphQLSchema {
+  async buildSchema(url: string, name: string, schema: SchemaDefinition) {
+    const existSchema = this.getGraphQLSchema(name);
+    if (existSchema) {
+      return existSchema;
+    }
+    const connection = await this.connections.getConn(url);
     const mongoSchema: Schema = new Schema(schema);
-    const configModel = model('config', mongoSchema);
+    const configModel = connection.model(name, mongoSchema);
     const ConfigTC = composeWithMongoose(configModel, {});
 
     const FIELDS = [
