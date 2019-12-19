@@ -5,8 +5,7 @@ import { SchemaDefinition, Connection } from 'mongoose';
  * @description model-Service parameters
  */
 export interface IGraphqlSchemas {
-  schemas: { [propsName: string]: GraphQLSchema };
-  getGraphQLSchema(name: string): GraphQLSchema | undefined;
+  getSchema(name: string): GraphQLSchema | undefined;
   buildSchema(
     url: string,
     name: string,

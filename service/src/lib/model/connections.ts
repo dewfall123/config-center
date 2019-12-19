@@ -5,11 +5,7 @@ import { IConnections } from '../../interface';
 @scope(ScopeEnum.Singleton)
 @provide('connections')
 export class Connections implements IConnections {
-  pool: { [propName: string]: Connection };
-
-  constructor() {
-    this.pool = {};
-  }
+  pool: { [propName: string]: Connection } = {};
 
   async getConn(url: string): Promise<Connection> {
     if (this.pool[url]) {

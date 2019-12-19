@@ -26,13 +26,13 @@ export default (appInfo: EggAppInfo) => {
 
   config.dbConfig = {
     url: `mongodb://172.25.100.24:27017/config`,
-    colection: 'main',
+    collection: 'schemas',
     schema: {
-      url: { type: String },
-      colection: { type: String }, // colection
-      project: { type: String }, // 所属项目
-      fields: { type: Object },
-      auth: { type: Array }, // 哪些角色有权限
+      url: { type: 'string' },
+      name: { type: 'string' }, // colection
+      fields: { type: 'object' },
+      project: { type: 'string' }, // 所属项目
+      auth: { type: 'array' }, // 哪些角色有权限
     },
   };
 

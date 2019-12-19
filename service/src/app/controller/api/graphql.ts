@@ -1,8 +1,6 @@
 import {
   Context,
   inject,
-  config,
-  EggAppConfig,
   controller,
   get,
   provide,
@@ -10,23 +8,21 @@ import {
 
 import { graphql } from 'graphql';
 
-import { IGraphqlSchemas } from '../../../interface';
+import { GraphqlSchemas } from '../../../lib/service/graphqlSchemas';
 
 @provide()
 @controller('/api/graphql')
 export class GraphQLController {
-
-  @config('dbConfig')
-  config: EggAppConfig;
-
   @inject('graphqlSchemas')
-  GraphQLService: IGraphqlSchemas;
+  graphqlSchemas: GraphqlSchemas;
 
-  @get('/:project/:collection')
+  @get('/:id')
   async index(ctx: Context) {
-    const { project, collection } = ctx.params;
-    
+    const { id } = ctx.params;
+    const { query } = ctx.query;
+
+    const graphqlSchema = await this.graphqlSchemas.getByID(id);
     const result = await graphql(graphqlSchema, query);
-    this.ctx.body = result;
+    ctx.body = result;
   }
 }
