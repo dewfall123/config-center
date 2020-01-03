@@ -1,10 +1,9 @@
 import { provide, scope, ScopeEnum } from 'midway';
 import { Connection, createConnection } from 'mongoose';
-import { IConnections } from '../../interface';
 
 @scope(ScopeEnum.Singleton)
 @provide('connections')
-export class Connections implements IConnections {
+export class Connections {
   pool: { [propName: string]: Connection } = {};
 
   async getConn(url: string): Promise<Connection> {

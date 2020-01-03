@@ -4,23 +4,22 @@ const { app, assert } = require('midway-mock/bootstrap');
 describe('test/app/controller/api/graphql.test.ts', () => {
   const apiPrefix = '/api/graphql';
 
-  it('should main query/', async () => {
+  it('/main', async () => {
+    const keys = [ 'name', 'project' ];
     const res = await app
-      .httpRequest(`${apiPrefix}/main`, {
-        data: {
-          query: `
-        {
-            findMany() {
-                id
-                project
-                name
-              }
-            }
-    `,
-        },
-      });
-    assert(res);
-    assert(res.body.data);
-    console.log(res.body.data);
+      .httpRequest()
+      .get(`${apiPrefix}/main?query={
+        findMany {
+          ${keys.join(' ')}
+        }
+      }`);
+    assert(res.body);
+    const { body: { data } } = res;
+    assert(data.findMany && data.findMany[0]);
+    assert(Object.keys(data.findMany[0]).length === 2);
+    for (const key of keys) {
+      assert(data.findMany[0].hasOwnProperty(key));
+    }
   });
+
 });
