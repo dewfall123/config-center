@@ -22,4 +22,15 @@ describe('test/app/controller/api/graphql.test.ts', () => {
     }
   });
 
+  it('/checkurl', async () => {
+    const res = await app
+    .httpRequest()
+    .get(`${apiPrefix}/main?query={
+      findMany {
+        ${keys.join(' ')}
+      }
+    }`);
+    assert(res.body);
+  });
+
 });

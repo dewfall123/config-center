@@ -6,11 +6,11 @@
   "dependencies": {
     "egg-scripts": "^2.10.0",
     "egg-view-static": "^1.0.0",
+    "generate-schema": "^2.6.0",
     "graphql": "^14.5.8",
     "graphql-compose": "^7.6.2",
     "graphql-compose-mongoose": "^7.3.0",
     "midway": "^1.0.0",
-    "mongodb": "^3.4.1",
     "mongoose": "^5.8.0"
   },
   "devDependencies": {

@@ -24,9 +24,14 @@ export default (appInfo: EggAppInfo) => {
     },
   };
 
+  config.security = {
+    csrf: true,
+  };
+
   config.dbConfig = {
-    url: `mongodb://172.25.100.24:27017/config`,
-    collection: 'schemas',
+    url: `mongodb://172.25.100.24:27017`,
+    dbName: 'config',
+    collectionName: 'schemas',
     schema: {
       url: { type: 'string' },
       name: { type: 'string' }, // colection
