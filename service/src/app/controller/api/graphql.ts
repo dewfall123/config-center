@@ -2,8 +2,8 @@ import {
   Context,
   inject,
   controller,
-  get,
   provide,
+  post,
 } from 'midway';
 
 import { graphql } from 'graphql';
@@ -16,10 +16,10 @@ export class GraphQLController {
   @inject('graphqlSchemas')
   graphqlSchemas: GraphqlSchemas;
 
-  @get('/:id')
+  @post('/:id')
   async index(ctx: Context) {
     const { id } = ctx.params;
-    const { query } = ctx.query;
+    const { query } = ctx.request.body;
 
     const graphqlSchema = await this.graphqlSchemas.getByID(id);
     const result = await graphql(graphqlSchema, query);

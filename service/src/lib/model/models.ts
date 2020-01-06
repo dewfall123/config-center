@@ -18,8 +18,6 @@ export interface ICollectionUrl {
 
 export interface ISchemaConfig extends ICollectionUrl, Document {
   fields: any;
-  project: string;
-  auth: string[];
 }
 
 @scope(ScopeEnum.Singleton)
@@ -31,7 +29,7 @@ export class Models {
   @inject('connections')
   connections: Connections;
 
-  private cache: { [propsName: string]: Model<ISchemaConfig> } = {};
+  private cache: { [propsName: string]: Model<Document> } = {};
 
   public MAIN_NAME = 'main';
 
@@ -39,7 +37,7 @@ export class Models {
   async init() {
     const mongooseUrl = `${this.dbConfig.url}/${this.dbConfig.dbName}`;
     const mainConnection = await this.connections.getConn(mongooseUrl);
-    const mongoSchema = new Schema(this.dbConfig.schema);
+    const mongoSchema = new Schema(this.dbConfig.fields);
     const MainModel = mainConnection.model<ISchemaConfig>(
       this.dbConfig.collectionName,
       mongoSchema,
@@ -56,14 +54,17 @@ export class Models {
     if (!document) {
       throw new Error(`cannot found model by this id: ${id}!`);
     }
-    const confDef = (document as unknown) as ISchemaConfig;
-    // TODO
-    const connection = await this.connections.getConn(confDef.url);
-    const mongoSchema = new Schema(confDef.fields);
-    const model = connection.model<ISchemaConfig>(
-      confDef.collectionName,
-      mongoSchema,
+    const schemaConfig = (document as unknown) as ISchemaConfig;
+    const connection = await this.connections.getConn(
+      `${schemaConfig.url}/${schemaConfig.dbName}`,
     );
+    // TODO should cache model?
+    const modelNames = connection.modelNames();
+    if (modelNames.includes(schemaConfig.collectionName)) {
+      connection.deleteModel(schemaConfig.collectionName);
+    }
+    const mongoSchema = new Schema(schemaConfig.fields);
+    const model = connection.model(schemaConfig.collectionName, mongoSchema);
     this.cache[id] = model;
     return model;
   }

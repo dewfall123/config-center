@@ -20,8 +20,8 @@
       "runtimeArgs": [
         "run",
         "debug",
-        "--",
-        "--inspect-brk"
+        // "--",
+        // "--inspect-brk"
       ],
       "runtimeExecutable": "npm",
       "skipFiles": [

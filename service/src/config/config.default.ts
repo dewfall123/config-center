@@ -32,12 +32,11 @@ export default (appInfo: EggAppInfo) => {
     url: `mongodb://172.25.100.24:27017`,
     dbName: 'config',
     collectionName: 'schemas',
-    schema: {
+    fields: {
       url: { type: 'string' },
-      name: { type: 'string' }, // colection
+      dbName: { type: 'string' },
+      collectionName: { type: 'string' },
       fields: { type: 'object' },
-      project: { type: 'string' }, // 所属项目
-      auth: { type: 'array' }, // 哪些角色有权限
     },
   };
 

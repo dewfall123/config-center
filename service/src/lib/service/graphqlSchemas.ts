@@ -20,6 +20,17 @@ export class GraphqlSchemas {
     'connection',
     'pagination',
   ];
+  private mutationFns = [
+    // mutations
+    'createOne',
+    'createMany',
+    'updateById',
+    'updateOne',
+    'updateMany',
+    'removeById',
+    'removeOne',
+    'removeMany',
+  ];
 
   @inject('Models')
   modles: Models;
@@ -31,8 +42,15 @@ export class GraphqlSchemas {
     const model = await this.modles.getByID(id);
     const ConfigTC = composeWithMongoose(model, {});
 
+    // query
     for (const field of this.queryFns) {
       schemaComposer.Query.addFields({
+        [field]: ConfigTC.getResolver(field),
+      });
+    }
+    // mutation
+    for (const field of this.mutationFns) {
+      schemaComposer.Mutation.addFields({
         [field]: ConfigTC.getResolver(field),
       });
     }
@@ -66,15 +84,15 @@ export class GraphqlSchemas {
   private LIMIT = 1;
 
   async inferSchema(collectionUrl: ICollectionUrl) {
-    const { url, dbName, collectionName} = collectionUrl;
-    const conn = await this.connections.getConn(`${url}/${dbName}`);
+    const { url, dbName, collectionName } = collectionUrl;
+    const conn = await this.connections.getConnWithoutCache(`${url}/${dbName}`);
     const mongoSchema = new Schema({});
     const model = conn.model(collectionName, mongoSchema);
     const docs = await model.find().limit(this.LIMIT);
     const originDocs = docs.map(i => {
       // @ts-ignore-next-line
       const fileds = { ...i._doc };
-      const ignoreFields = [ '_id', '__v' ];
+      const ignoreFields = ['_id', '__v'];
       for (const key of ignoreFields) {
         delete fileds[key];
       }
