@@ -65,7 +65,7 @@ export class GraphqlSchemas {
     return doc;
   }
 
-  async checkUrl(collectionUrl: ICollectionUrl): Promise<string | Schema> {
+  async checkUrl(collectionUrl: ICollectionUrl): Promise<string> {
     const { url, dbName, collectionName } = collectionUrl;
     let conn;
     try {
