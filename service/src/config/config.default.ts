@@ -37,6 +37,11 @@ export default (appInfo: EggAppInfo) => {
       dbName: { type: 'string' },
       collectionName: { type: 'string' },
       fields: { type: 'object' },
+      meta: {
+        name: { type: 'string' },
+        describe: { type: 'string' },
+        icon: { type: 'string' },
+      }
     },
   };
 

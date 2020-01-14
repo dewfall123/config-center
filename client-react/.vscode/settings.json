@@ -4,6 +4,11 @@
         "javascriptreact",
         "typescript",
         "typescriptreact",
-        "html"
-    ]
+        "html",
+        "css"
+    ],
+    "stylelint.packageManager": "yarn",
+    "search.followSymlinks": false,
+    "editor.tabSize": 2,
+    "typescript.tsdk": "node_modules\\typescript\\lib"
 }
