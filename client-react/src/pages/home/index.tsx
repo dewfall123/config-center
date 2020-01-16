@@ -1,22 +1,22 @@
-import React, { FC } from 'react';
+import React from 'react';
 import styles from './index.css';
-import { connect } from 'dva';
-import { ICollectionsState } from './models/collection';
 import Collection from './components/collection';
+import useCollectionsModel from '@/hoxmodel/useCollectionsModel';
 
-const Home: FC<ICollectionsState> = props => {
-  const { collections = { list: [] } } = props;
-  const collectionsList = collections.list.map(collection => (
-    <Collection collection={collection}/>
+const Home = () => {
+  const { collections } = useCollectionsModel();
+
+  const collectionsList = collections.map(collection => (
+    <Collection collection={collection} key={collection._id} />
   ));
 
   return (
-    <div className={styles.container}>
-      {collectionsList}
-    </div>
+    <article className={styles.container}>
+      <section className={styles.list}>
+        {collectionsList}
+      </section>
+    </article>
   );
 };
 
-const mapStateToProps = ({ collections }: ICollectionsState) => ({ collections });
-
-export default connect(mapStateToProps)(Home);
+export default Home;
