@@ -28,6 +28,8 @@
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "umi": "^3.0.14",
+    "umi-plugin-tailwindcss": "^1.0.5",
     "yorkie": "^2.0.0"
-  }
+  },
+  "devDependencies": {}
 }

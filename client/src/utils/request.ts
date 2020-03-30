@@ -52,7 +52,7 @@ function isGraphqlQuery(options: AxiosRequestConfig) {
 axios.interceptors.response.use(
   response => {
     if (isGraphqlQuery(response.config)) {
-      return response.data.data;
+      return response.data.data || response.data.errors;
     }
     return response.data;
   },

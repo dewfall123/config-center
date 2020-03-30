@@ -2,6 +2,7 @@ import { defineConfig } from 'umi';
 
 export default defineConfig({
   dynamicImport: {},
+  // plugins: ['./src/plugins/tailwind'],
   routes: [
     { path: '/', redirect: '/home' },
     {
@@ -9,8 +10,9 @@ export default defineConfig({
       component: '@/layouts/index',
       routes: [
         { path: '/home', component: '@/pages/home' },
-      ]
-    }
+        { path: '/curd/:id', component: '@/pages/curd' },
+      ],
+    },
   ],
 
   proxy: {
@@ -20,4 +22,5 @@ export default defineConfig({
       // pathRewrite: { '^/api': '' },
     },
   },
+
 });
