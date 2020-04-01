@@ -9,7 +9,8 @@ export class HomeController {
 
   @get('/')
   async index() {
-    this.ctx.body = 'index!';
+    this.ctx.set('Cache-Control', 'no-store')
+    await this.ctx.render('index.html')
   }
 
 }

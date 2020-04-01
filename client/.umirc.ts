@@ -1,8 +1,9 @@
-import { defineConfig } from 'umi';
+import { defineConfig, IConfig } from 'umi';
 
 export default defineConfig({
+  outputPath: '../service/src/app/public/',
+  publicPath: '/public/',
   dynamicImport: {},
-  // plugins: ['./src/plugins/tailwind'],
   routes: [
     { path: '/', redirect: '/home' },
     {
@@ -15,12 +16,11 @@ export default defineConfig({
     },
   ],
 
-  proxy: {
-    '/api': {
-      target: 'http://localhost:7001/',
-      changeOrigin: true,
-      // pathRewrite: { '^/api': '' },
-    },
+  hash: true,
+  history: {
+    type: 'hash',
   },
 
+  tailwindcss: {
+  },
 });
