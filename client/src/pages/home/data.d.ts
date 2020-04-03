@@ -10,7 +10,5 @@ interface Collection {
 }
 
 interface CollectionQueryResult {
-  data: {
-    findMany: Collection[];
-  };
+  data: Collection[],
 }

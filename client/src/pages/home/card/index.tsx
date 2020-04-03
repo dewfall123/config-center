@@ -12,7 +12,7 @@ export default ({ coll }: CardProps) => {
         <div className={divClassName} onClick={() => history.push(`/curd/${coll._id}`)}>
             <p>{coll.collectionName}</p>
             <p>{coll._id}</p>
-            <p>{coll.meta.name}</p>
+            <p>{coll.meta?.name}</p>
         </div>
     );
 };

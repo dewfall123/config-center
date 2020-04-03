@@ -5,9 +5,8 @@ import Card from './card';
 
 export default () => {
   const { data } = (useRequest(queryColls) as unknown) as CollectionQueryResult;
-
   const list = data
-    ? data.findMany.map(coll => <Card key={coll._id} coll={coll}></Card>)
+    ? data.map(coll => <Card key={coll._id} coll={coll}></Card>)
     : '';
   return (
     <div className="flex justify-center">

@@ -18,6 +18,11 @@ export interface ICollectionUrl {
 
 export interface ISchemaConfig extends ICollectionUrl, Document {
   fields: any;
+  meta: {
+    name: string,
+    icon: string,
+    describe: string,
+  }
 }
 
 @scope(ScopeEnum.Singleton)
